@@ -1,0 +1,33 @@
+{
+  "name": "enyakinhastanebot",
+  "version": "1.0.0",
+  "description": "Yakındaki hastaneleri sorgulamak için Telegram botu",
+  "main": "bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osman-koc/en-yakin-hastane-telegram-botu.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "acil",
+    "hastane"
+  ],
+  "author": "Osman Koç",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osman-koc/en-yakin-hastane-telegram-botu/issues"
+  },
+  "homepage": "https://github.com/osman-koc/en-yakin-hastane-telegram-botu#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "geolib": "^3.3.4",
+    "node-telegram-bot-api": "^0.66.0",
+    "path": "^0.12.7",
+    "query-string": "^9.0.0"
+  }
+}
