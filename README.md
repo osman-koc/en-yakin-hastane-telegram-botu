@@ -5,6 +5,14 @@ Bu proje, kullanıcıların konumlarına göre en yakın hastaneleri sorgulamala
 
 Hastane verileri Sağlık Bakanlığı web sitesinden, hastanelerin konum bilgileri ise Google Maps'ten alınmıştır. Verilerde hata/eksiklik olması durumunda `./db/hospitals.json` altındaki verileri güncelleyen bir pull request oluşturabilirsiniz. Ayrıca bu verileri kendi projelerinizde de kaynak göstererek kullanabilirsiniz.
 
+## Kullanım
+
+Telegram hesabınız varsa kullanıcı arama kısmına `En Yakın Hastaneyi Bul` yazarak veya aşağıdaki linkten bota ulaşabilirsiniz:
+https://t.me/EnYakinHastaneBot
+
+<a href="https://t.me/EnYakinHastaneBot"><img src="./img/bot-logo.png" width="150" /></a>
+
+
 ## Başlangıç
 
 Uygulamayı bilgisayarınızda çalıştırmak için bu adımları takip edebilirsiniz.
