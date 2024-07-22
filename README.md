@@ -10,7 +10,7 @@ Hastane verileri Sağlık Bakanlığı web sitesinden, hastanelerin konum bilgil
 Telegram hesabınız varsa kullanıcı arama kısmına `En Yakın Hastaneyi Bul` yazarak veya aşağıdaki linkten bota ulaşabilirsiniz:
 https://t.me/EnYakinHastaneBot
 
-<a href="https://t.me/EnYakinHastaneBot"><img src="./img/bot-logo.png" width="150" /></a>
+<a href="https://t.me/EnYakinHastaneBot"><img src="./img/bot-logo.jpg" width="150" /></a>
 
 
 ## Başlangıç
