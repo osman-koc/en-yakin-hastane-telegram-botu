@@ -80,6 +80,9 @@ Bot ile ilgili geliştirme yaparken aşağıdaki dosyalar önemlidir:
 
 Katkıda bulunmak isterseniz, lütfen bir pull request açın veya proje üzerinde çalışmadan önce bir issue oluşturun. Büyük değişiklikler için lütfen önce neyi değiştirmek istediğinizi tartışmak için bir issue açın.
 
+Katkıda bulunanlar:
+- Göktuğ Başaran [(@goktugbasaran)](https://github.com/goktugbasaran)
+
 ## Bağlantılar
 
 - [Proje Ana Sayfası](https://github.com/osman-koc/en-yakin-hastane-telegram-botu)
