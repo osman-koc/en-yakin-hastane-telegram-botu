@@ -4,11 +4,15 @@ async function appendUsageDataToGoogleSheets(logData) {
     const url = `${process.env.MY_API_URI}/append-to-google-sheets/hospital`;
 
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        if (process.env.MY_API_KEY) {
+            headers['x-api-key'] = process.env.MY_API_KEY;
+        }
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify({ logData })
         });
 

@@ -39,6 +39,7 @@ TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
 OPENSTREETMAP_URI=https://nominatim.openstreetmap.org/reverse
 GOOGLE_MAPS_URI=https://www.google.com/maps/search/?api=1
 MY_API_URI=YOUR_CUSTOM_API_URI (optional)
+MY_API_KEY=YOUR_CUSTOM_API_KEY (optional
 ```
 
 ### Çalıştırma
