@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 async function appendUsageDataToGoogleSheets(logData) {
-    const url = `${process.env.MY_API_URI}/append-to-google-sheets/hospital`;
+    const url = `${process.env.MY_API_URI}/append-to-google-sheets-hospital`;
 
     try {
         const headers = {
