@@ -1,12 +1,8 @@
 {
   "name": "enyakinhastanebot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Yakındaki hastaneleri sorgulamak için Telegram botu",
-  "main": "bot.js",
   "type": "module",
-  "scripts": {
-    "start": "node bot.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/osman-koc/en-yakin-hastane-telegram-botu.git"
