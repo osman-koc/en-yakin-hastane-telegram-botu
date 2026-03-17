@@ -19,7 +19,7 @@ Uygulamayı bilgisayarınızda çalıştırmak için bu adımları takip edebili
 
 ### Gereksinimler
 
-- Node.js
+- Node.js v20+
 - npm (Node Package Manager)
 
 ### Kurulum
@@ -38,8 +38,8 @@ Projenin düzgün çalışması için bir `.env` dosyasına ihtiyacınız var. P
 TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
 OPENSTREETMAP_URI=https://nominatim.openstreetmap.org/reverse
 GOOGLE_MAPS_URI=https://www.google.com/maps/search/?api=1
-MY_API_URI=YOUR_CUSTOM_API_URI (optional)
-MY_API_KEY=YOUR_CUSTOM_API_KEY (optional
+MY_API_URI=YOUR_CUSTOM_API_URI   # opsiyonel
+MY_API_KEY=YOUR_CUSTOM_API_KEY   # opsiyonel
 ```
 
 ### Çalıştırma
@@ -50,7 +50,16 @@ Telegram botunu başlatmak için aşağıdaki komutu kullanın:
 npm start
 ```
 
-## Kullanım
+### Docker ile Çalıştırma
+
+Uygulamayı Docker üzerinde çalıştırmak için önce imajı derleyin, ardından çalıştırın:
+
+```bash
+docker build -t en-yakin-hastane-bot .
+docker run -d --env-file .env en-yakin-hastane-bot
+```
+
+## Komutlar ve Özellikler
 
 Bot, aşağıdaki komutları ve mesajları tanır:
 
@@ -62,20 +71,25 @@ Bot, aşağıdaki komutları ve mesajları tanır:
 
 ### Konum Bilgisi Gönderme
 
-Bot, kullanıcıdan konum bilgisi aldığında, konumun Türkiye içinde olup olmadığını kontrol eder. Eğer konum Türkiye dışındaysa, kullanıcıya yalnızca Türkiye içindeki hastaneler için hizmet verildiğini belirten bir mesaj gönderir. Türkiye içindeki konumlar için, en yakın hastaneleri listeler ve kullanıcıya gönderir.
+Bot, kullanıcıdan konum bilgisi aldığında, konumun Türkiye içinde olup olmadığını kontrol eder. Eğer konum Türkiye dışındaysa, kullanıcıya yalnızca Türkiye içindeki hastaneler için hizmet verildiğini belirten bir mesaj gönderir. Türkiye içindeki konumlar için en yakın hastaneleri önce ilçe bazında, bulunamazsa il bazında, o da bulunamazsa tüm Türkiye genelinde mesafeye göre sıralayarak listeler.
+
+İlk 5 hastane doğrudan listelenir. Daha fazla hastane varsa **"Daha Fazla Göster"** butonu ile ek sonuçlar görüntülenebilir.
 
 ### Hata Yönetimi
 
-Bot, Telegram API'si ile ilgili hataları ve diğer genel hataları ele almak için `handleError` fonksiyonunu kullanır. Bu fonksiyon, hata durumunda uygun mesajları gönderir ve belirli hatalar için yeniden deneme mekanizması uygular.
+Servis tarafında oluşan hatalar `services/logger.js` aracılığıyla loglanır. Konum alınamadığında veya OpenStreetMap API'sinde bir hata oluştuğunda kullanıcıya bilgilendirici bir mesaj gönderilir.
 
 ## Geliştirme
 
 Bot ile ilgili geliştirme yaparken aşağıdaki dosyalar önemlidir:
 
-- `bot.js`: Botun ana dosyasıdır.
-- `api/openstreetmap-api.js`: OpenStreetMap API'si ile etkileşim sağlar.
-- `api/find-hospital.js`: JSON veritabanından hastane verilerini arar.
-- `api/my-api.js`: Özel geliştirilen bir servis ile iletişimi sağlar. Burada kullanım verilerini toplayan bir metot mevcut. Opsiyoneldir, kendi servisinizi oluşturup bu dosyayı entegre edebilirsiniz.
+- `bot.js`: Uygulamanın giriş noktasıdır; botu başlatır.
+- `api/webhook.js`: [grammY](https://grammy.dev/) kütüphanesi ile Telegram bot mantığını içerir; mesaj ve callback handler'ları burada tanımlıdır.
+- `services/find-hospital.js`: JSON veritabanından ilçe → il → ülke geneli sırasıyla hastane arar ve mesafeye göre sıralar.
+- `services/openstreetmap-api.js`: Enlem/boylam koordinatlarından şehir ve ilçe bilgisi almak için OpenStreetMap Nominatim API'sini kullanır.
+- `services/my-api.js`: Kullanım verilerini Google Sheets'e kaydetmek için opsiyonel özel servis entegrasyonunu sağlar.
+- `services/logger.js`: Uygulama geneli loglama servisini sağlar.
+- `db/hospitals.json`: Türkiye'deki hastanelerin isim, tip, adres ve konum bilgilerini içeren veri tabanı dosyasıdır.
 
 ## Katkıda Bulunma
 
