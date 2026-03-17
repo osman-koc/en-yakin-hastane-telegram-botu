@@ -42,7 +42,7 @@ bot.on('message', async (ctx) => {
           logger.info(`Location request: ${city} / ${district}`, chatId);
           locationSuccess = true;
           const userLocation = { latitude, longitude };
-          const nearestHospitals = await findHospitalsFromDb(city, district, userLocation);
+          const { hospitals: nearestHospitals, fallback } = await findHospitalsFromDb(city, district, userLocation);
           if (nearestHospitals && nearestHospitals.length > 0) {
             await ctx.reply('Size en yakın hastaneler listeleniyor.');
             await new Promise(resolve => setTimeout(resolve, 200));
@@ -61,7 +61,15 @@ bot.on('message', async (ctx) => {
               }
             }
             if (nearestHospitals.length > 5) {
-              await ctx.reply(`${city}/${district} için toplam ${nearestHospitals.length} hastane bulundu. Diğer hastaneleri görmek için "Daha Fazla Göster" butonuna tıklayın.`, {
+              let locationLabel;
+              if (fallback === 'city') {
+                locationLabel = city;
+              } else if (fallback === 'nationwide') {
+                locationLabel = 'Konumunuza en yakın';
+              } else {
+                locationLabel = `${city}/${district}`;
+              }
+              await ctx.reply(`${locationLabel} için toplam ${nearestHospitals.length} hastane bulundu. Diğer hastaneleri görmek için "Daha Fazla Göster" butonuna tıklayın.`, {
                 reply_markup: {
                   inline_keyboard: [[{ text: 'Daha Fazla Göster', callback_data: 'show_more_hospitals' }]]
                 }
