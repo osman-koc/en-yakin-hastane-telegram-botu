@@ -4,6 +4,7 @@ import { appendUsageDataToGoogleSheets } from '../services/my-api.js';
 import { findHospitalsFromDb } from '../services/find-hospital.js';
 import queryString from 'query-string';
 import { Bot, webhookCallback, session } from 'grammy';
+import { logger } from '../services/logger.js';
 
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
 
@@ -18,7 +19,7 @@ bot.use(session({
   initial: initialSession
 }));
 
-export default webhookCallback(bot, 'http');
+export default (req, res) => webhookCallback(bot, 'http')(req, res);
 
 // Mesaj handler
 bot.on('message', async (ctx) => {
@@ -38,7 +39,7 @@ bot.on('message', async (ctx) => {
           locationSuccess = true;
           responseMsg = 'Konumunuz Türkiye dışındaki bir ülke olarak tespit edildi. Servisimiz şu an için yalnızca Türkiye içerisindeki hastaneler için hizmet vermektedir. İlginiz için teşekkür ederiz.';
         } else if (city && district) {
-          console.log(`-> Request for: ${city} / ${district}`);
+          logger.info(`Location request: ${city} / ${district}`, chatId);
           locationSuccess = true;
           const userLocation = { latitude, longitude };
           const nearestHospitals = await findHospitalsFromDb(city, district, userLocation);
@@ -84,7 +85,7 @@ bot.on('message', async (ctx) => {
           } catch (error) { }
         }
       } catch (error) {
-        console.error('Hata oluştu:', error);
+        logger.error(`Unhandled error: ${error.message}`, chatId);
         responseMsg = 'Servislerde oluşan bir hatadan dolayı şu anda isteğinize yanıt alamadım. Konumu doğru gönderdiğinizden eminseniz tekrar deneyebilirsiniz.';
       }
       if (!locationSuccess) {
@@ -109,9 +110,11 @@ bot.on('message', async (ctx) => {
       await ctx.reply(responseMsg, { parse_mode: 'HTML' });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(`Unexpected error: ${error.message}`, ctx.chat?.id);
   }
 });
+
+export { bot };
 
 // Callback handler
 bot.on('callback_query:data', async (ctx) => {
